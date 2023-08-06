@@ -3,6 +3,7 @@ import "./App.css";
 import Card from "./components/card/Card";
 import Cart from "./components/cart/Cart";
 import { getData } from "./constants/db";
+import totalPrice from "./units/total-price";
 
 const courses = getData();
 
@@ -46,8 +47,13 @@ const App = () => {
   };
 
   const onCheckout = () => {
-    telegram.MainButton.text = "Sotib olish :)";
-    telegram.MainButton.show();
+    telegram.MainButton.text = `Sotib olish: ${totalPrice(
+      cartItems
+    ).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    })}`;
+    cartItems.length ? telegram.MainButton.show() : "";
   };
 
   return (
